@@ -2,7 +2,7 @@ import os
 import streamlit as st
 import pickle
 import time
-from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import UnstructuredURLLoader
@@ -25,10 +25,11 @@ file_path = "faiss_store_openai.pkl"
 
 main_placeholder = st.empty()
 
-llm = ChatGroq(
-    temperature=0.9,
-    model_name="llama3-8b-8192"
+llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",   # fast & budget-friendly for RAG
+    temperature=0.3             # lower temp is better for factual news
 )
+
 
 if process_url_clicked:
     # load data
